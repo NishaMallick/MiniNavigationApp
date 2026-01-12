@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Mini Navigation App</string>
+    <string name="lat_lng_text">%1$s / %2$s</string>
+    <string name="navigation_button">Start Navigation</string>
+
+</resources>
