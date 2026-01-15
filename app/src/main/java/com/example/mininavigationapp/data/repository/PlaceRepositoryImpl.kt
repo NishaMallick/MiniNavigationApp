@@ -10,13 +10,13 @@ class PlaceRepositoryImpl @Inject constructor(
     private val localDataSource: PlaceLocalDataSource
 ) : PlaceRepository {
 
-    override suspend fun getPlaces(): List<Place> {
+    override fun getPlaces(): List<Place> {
         return localDataSource
             .loadPlaces()
             .map { it.toDomain() }
     }
 
-    override suspend fun getPlaceById(id: Int): Place? {
+    override fun getPlaceById(id: Int): Place? {
         return localDataSource
             .loadPlaces()
             .find { it.id == id }?.toDomain() }

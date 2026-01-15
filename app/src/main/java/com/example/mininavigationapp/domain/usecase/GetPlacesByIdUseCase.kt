@@ -7,7 +7,7 @@ import javax.inject.Inject
 class GetPlacesByIdUseCase @Inject constructor(
     private val repository: PlaceRepository) {
 
-    suspend operator fun invoke(placeId: Int): Place? {
+    operator fun invoke(placeId: Int): Place? {
         return repository.getPlaceById(placeId)
     }
 }
