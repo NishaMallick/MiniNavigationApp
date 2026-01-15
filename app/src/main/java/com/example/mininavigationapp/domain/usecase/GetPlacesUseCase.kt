@@ -7,7 +7,7 @@ import javax.inject.Inject
 class GetPlacesUseCase @Inject constructor(
     private val repository: PlaceRepository
 ) {
-    suspend operator fun invoke(): List<Place> {
+    operator fun invoke(): List<Place> {
         return repository.getPlaces()
     }
 }

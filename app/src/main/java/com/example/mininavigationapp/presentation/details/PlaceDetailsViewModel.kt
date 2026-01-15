@@ -18,7 +18,7 @@ class PlaceDetailsViewModel @Inject constructor(
 
     private val mockedLocation = Pair(59.1925, 17.6270)
 
-    suspend fun loadPlace(placeId: Int) {
+    fun loadPlace(placeId: Int) {
         val place = getPlacesByIdUseCase(placeId)
         if (place == null) {
             _state.value = PlaceDetailsUiState.Error("Place not found")
