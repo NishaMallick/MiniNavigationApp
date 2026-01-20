@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -21,7 +20,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SearchBarDefaults.colors
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -140,7 +138,7 @@ fun PlaceDetailsScreen(
                 Button(onClick = {
                     navController.navigate("simulation/${place?.lat}/${place?.lng}")},
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFF009688)),
+                        containerColor = Color(0xFF2196F3)),
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(vertical = 16.dp)) {

@@ -1,17 +1,24 @@
 package com.example.mininavigationapp.presentation.navigation
 
-import android.R.attr.padding
+import com.example.mininavigationapp.R
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -27,6 +34,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -68,44 +77,70 @@ fun NavigationScreen(
                 NavigationUiState.Idle -> {
                     Text("Ready to start navigation")
                     Button(onClick = { viewModel.startNavigation(destinationLat, destinationLng ) },
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = Color(0xFF009688))) {
+                        colors = ButtonDefaults.buttonColors(Color(0xFF2196F3))) {
                         Text("Start")
                     }
                 }
                 is NavigationUiState.Navigating -> {
                     val data = state as NavigationUiState.Navigating
 
-                    Text(
-                        text = "Remaining distance",
-                        style = MaterialTheme.typography.titleMedium
-                    )
+                    Card(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(200.dp),
+                        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+                    ) {
+                        Image(
+                            painter = painterResource(id = R.drawable.map_route_placeholder),
+                            contentDescription = "Map preview",
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier.fillMaxSize()
+                        )
+                    }
+                        Spacer(modifier = Modifier.height(24.dp))
 
-                    Text(
-                        text = "%.2f km".format(data.remainingDistanceKm),
-                        style = MaterialTheme.typography.displaySmall,
-                        fontWeight = FontWeight.Bold
-                    )
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 24.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
 
-                    Text(
-                        text = "ETA: ${data.etaText}",
-                        style = MaterialTheme.typography.titleMedium
-                    )
+                            Text(
+                                text = "Remaining distance",
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = Color.Gray
+                            )
 
-                    /*LinearProgressIndicator(
-                        progress = (1f - data.remainingDistanceKm / data.initialDistanceKm)
-                            .coerceIn(0f, 1f),
-                        modifier = Modifier.fillMaxWidth()
-                    )*/
+                            Text(
+                                text = "%.2f km".format(data.remainingDistanceKm),
+                                style = MaterialTheme.typography.headlineMedium,
+                                fontWeight = FontWeight.Bold
+                            )
+                            Spacer(modifier = Modifier.height(8.dp))
 
-//                    Row(
-//                        horizontalArrangement = Arrangement.spacedBy(16.dp)
-//                    ) {
-//                        Button(onClick = { viewModel.stop() }) {
-//                            Text("Stop")
-//                        }
-//                    }
-                }
+                            Text(
+                                text = "ETA: ${data.etaText}",
+                                style = MaterialTheme.typography.bodyLarge
+                            )
+                            Spacer(modifier = Modifier.height(8.dp))
+
+                            Button(
+                                onClick = { navController.popBackStack()},
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(52.dp),
+                                colors = ButtonDefaults.buttonColors(Color(0xFFD32F2F)),
+                                shape = RoundedCornerShape(12.dp)
+                            ) {
+                                Text(
+                                    text = "Stop",
+                                    style = MaterialTheme.typography.bodyLarge,
+                                    fontWeight = FontWeight.Bold
+                                )
+                            }
+                        }
+                    }
 
                 NavigationUiState.Arrived -> {
                     Text("You have arrived.")

@@ -8,43 +8,57 @@
   {
     "id": 2,
     "name": "Office",
-    "icon": "office_icon",
+    "icon": "work_icon",
     "lat": 59.1669,
     "lng": 17.6371
   },
   {
     "id": 3,
     "name": "Gym",
-    "icon": "home_icon",
+    "icon": "gym_icon",
     "lat": 59.2048,
     "lng": 17.5996
   },
   {
     "id": 4,
     "name": "Supermarket",
-    "icon": "home_icon",
-    "lat": 59.3293,
-    "lng": 18.0686
+    "icon": "supermarket_icon",
+    "lat": 59.1996,
+    "lng": 17.6693
   },
   {
     "id": 5,
-    "name": "Solna",
-    "icon": "home_icon",
-    "lat": 59.3293,
-    "lng": 18.0686
+    "name": "Hospital",
+    "icon": "hospital_icon",
+    "lat": 59.2204,
+    "lng": 17.9435
   },
   {
     "id": 6,
-    "name": "Uppsala",
-    "icon": "home_icon",
-    "lat": 59.3293,
-    "lng": 18.0686
+    "name": "City Mall",
+    "icon": "mall_icon",
+    "lat": 59.1960,
+    "lng": 17.6281
   },
   {
     "id": 7,
-    "name": "Stockholm City",
-    "icon": "home_icon",
-    "lat": 59.3293,
-    "lng": 18.0686
+    "name": "Cafe",
+    "icon": "cafe_icon",
+    "lat": 59.1871,
+    "lng": 17.6175
+  },
+  {
+    "id": 8,
+    "name": "Restaurant",
+    "icon": "restaurant_icon",
+    "lat": 59.214,
+    "lng": 17.647
+  },
+  {
+    "id": 9,
+    "name": "Police Station",
+    "icon": "police_station_icon",
+    "lat": 59.1950,
+    "lng": 17.6280
   }
 ]
