@@ -1,7 +1,5 @@
 package com.example.mininavigationapp.presentation.details
 
-import com.example.mininavigationapp.R
-
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -30,124 +28,169 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.layout.ContentScale
-
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.mininavigationapp.R
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PlaceDetailsScreen(
     viewModel: PlaceDetailsViewModel,
-    navController: NavController) {
+    navController: NavController
+) {
 
     val state by viewModel.state.collectAsState()
     Scaffold(
         topBar = {
-            TopAppBar(
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color(0xFF1565C0),
-                    titleContentColor = White
-                ),
-                title = { Text(
-                    when (state) {
-                        is PlaceDetailsUiState.Success ->
-                            (state as PlaceDetailsUiState.Success).places.name
-                        is PlaceDetailsUiState.Error -> "Error"
-                        PlaceDetailsUiState.Loading -> "Loading..."
-                    }
-                ) },
-                navigationIcon = {
-                    IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back",
-                            tint = White)
-                    }
-                }
+            PlaceDetailsTopBar(
+                state = state,
+                onBackClick = { navController.popBackStack() }
             )
         }
     ) { padding ->
-    when (state) {
-        is PlaceDetailsUiState.Loading -> {
-            Text("Loading...")
+        when (state) {
+            is PlaceDetailsUiState.Loading -> {
+                Text("Loading...")
+            }
+
+            is PlaceDetailsUiState.Success -> {
+                val successState = state as PlaceDetailsUiState.Success
+                //val distanceInKm = (state as? PlaceDetailsUiState.Success)?.distanceInKms
+                PlaceDetailsSuccessContent(
+                    state = successState,
+                    modifier = Modifier.padding(padding),
+                    onNavigateClick = {
+                        navController.navigate(
+                            "simulation/${successState.places.lat}/${successState.places.lng}"
+                        )
+                    }
+                )
+            }
+
+            is PlaceDetailsUiState.Error -> {
+                Text(
+                    text = stringResource(R.string.error_text),
+                    modifier = Modifier.padding(16.dp)
+                )
+            }
         }
-        is PlaceDetailsUiState.Success -> {
-            val place = (state as? PlaceDetailsUiState.Success)?.places
-            val distanceInKm = (state as? PlaceDetailsUiState.Success)?.distanceInKms
+    }
+}
 
-            Column(
-                modifier = Modifier
-                    .padding(16.dp)
-                    .fillMaxSize()
-            ) {
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(200.dp),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
-                ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.map_placeholder),
-                        contentDescription = "Map preview",
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier.fillMaxSize()
-                    )
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun PlaceDetailsTopBar(
+    state: PlaceDetailsUiState,
+    onBackClick: () -> Unit
+) {
+    TopAppBar(
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = Color(0xFF1565C0),
+            titleContentColor = White
+        ),
+        title = {
+            Text(
+                when (state) {
+                    is PlaceDetailsUiState.Success -> state.places.name
+                    is PlaceDetailsUiState.Error -> "Error"
+                    PlaceDetailsUiState.Loading -> "Loading..."
                 }
+            )
+        },
+        navigationIcon = {
+            IconButton(onClick = onBackClick) {
+                Icon(
+                    Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = "Back",
+                    tint = White
+                )
+            }
+        }
+    )
+}
 
-                Spacer(modifier = Modifier.height(16.dp))
+@Composable
+fun PlaceDetailsSuccessContent(
+    state: PlaceDetailsUiState.Success,
+    modifier: Modifier = Modifier,
+    onNavigateClick: () -> Unit
+) {
+    val place = state.places
+    val distanceInKm = state.distanceInKms
 
-                // Coordinates
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 8.dp),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
-                ) {
-                    Column(modifier = Modifier.padding(16.dp)) {
-                        Text(
-                            text = "Coordinates",
-                            style = MaterialTheme.typography.titleMedium,
-                            fontWeight = FontWeight.SemiBold
-                        )
-                        Text(
-                            text = "Latitude: ${place?.lat}\nLongitude: ${place?.lng}",
-                            style = MaterialTheme.typography.bodyMedium,
-                            modifier = Modifier.padding(top = 4.dp)
-                        )
-                    }
-                }
+    Column(
+        modifier = modifier
+            .padding(16.dp)
+            .fillMaxSize()
+    ) {
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(200.dp),
+            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.map_placeholder),
+                contentDescription = "Map preview",
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.fillMaxSize()
+            )
+        }
 
-                // Distance
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 8.dp),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
-                ) {
-                    Column(modifier = Modifier.padding(16.dp)) {
-                        Text(
-                            text = "Distance : %.2f km".format(distanceInKm),
-                            style = MaterialTheme.typography.bodyMedium,
-                            modifier = Modifier.padding(top = 4.dp)
-                        )
-                    }
-                }
-                Spacer(modifier = Modifier.weight(1f)) // push button to bottom
+        Spacer(modifier = Modifier.height(16.dp))
 
-                Button(onClick = {
-                    navController.navigate("simulation/${place?.lat}/${place?.lng}")},
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFF2196F3)),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 16.dp)) {
-                    Text(text = stringResource(R.string.navigation_button))
-                }
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp),
+            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+        ) {
+            Column(modifier = Modifier.padding(16.dp)) {
+                Text(
+                    text = stringResource(R.string.coordinates_title_text),
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.SemiBold
+                )
+                Text(
+                    text = stringResource(
+                        R.string.coordinates_text,
+                        place.lat,
+                        place.lng
+                    ),
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.padding(top = 4.dp)
+                )
             }
         }
 
-        else -> PlaceDetailsUiState.Error("Some errors occurred")
-    }
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp),
+            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+        ) {
+            Column(modifier = Modifier.padding(16.dp)) {
+                Text(
+                    text = "Distance : %.2f km".format(distanceInKm),
+                    style = MaterialTheme.typography.bodyMedium
+                )
+            }
         }
+
+        Spacer(modifier = Modifier.weight(1f))
+
+        Button(
+            onClick = onNavigateClick,
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color(0xFF2196F3)
+            ),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 16.dp)
+        ) {
+            Text(text = stringResource(R.string.navigation_button))
+        }
+    }
 }

@@ -5,7 +5,8 @@ import com.example.mininavigationapp.domain.repository.PlaceRepository
 import javax.inject.Inject
 
 class GetPlacesByIdUseCase @Inject constructor(
-    private val repository: PlaceRepository) {
+    private val repository: PlaceRepository
+) {
 
     operator fun invoke(placeId: Int): Place? {
         return repository.getPlaceById(placeId)

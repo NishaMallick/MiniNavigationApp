@@ -2,5 +2,16 @@
     <string name="app_name">Mini Navigation App</string>
     <string name="lat_lng_text">%1$s / %2$s</string>
     <string name="navigation_button">Start Navigation</string>
-
+    <string name="navigation_stop_button">Stop</string>
+    <string name="remaining_distance_title_text">Remaining distance</string>
+    <string name="navigation_start_button">Start</string>
+    <string name="navigation_start_text">Ready to start navigation</string>
+    <string name="navigation_text">Navigation</string>
+    <string name="arrived_text">You have arrived</string>
+    <string name="error_text">Error</string>
+    <string name="coordinates_title_text">Coordinates</string>
+    <string name="accessibility_image">Icon Image</string>
+    <string name="coordinates_text">Latitude: %1$s\nLongitude: %2$s</string>
+    <string name="distance_km">%.2f km</string>
+    <string name="eta_text">ETA: %1$s</string>
 </resources>
