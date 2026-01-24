@@ -32,7 +32,7 @@ class MainActivity : ComponentActivity() {
                 navController = navController,
                 startDestination = "list"
             ) {
-
+                //for home screen
                 composable("list") {
                     PlacesScreen(
                         placesViewModel,
@@ -40,6 +40,7 @@ class MainActivity : ComponentActivity() {
                     )
                 }
 
+                //for place details screen
                 composable(
                     route = "details/{id}",
                     arguments = listOf(
@@ -48,8 +49,6 @@ class MainActivity : ComponentActivity() {
                 ) { backStackEntry ->
 
                     val id = backStackEntry.arguments?.getInt("id")!!
-
-                    // ✅ Create ViewModel INSIDE destination
                     val detailsViewModel: PlaceDetailsViewModel = hiltViewModel()
 
                     LaunchedEffect(id) {
@@ -59,6 +58,7 @@ class MainActivity : ComponentActivity() {
                     PlaceDetailsScreen(detailsViewModel, navController)
                 }
 
+                //for navigation screen
                 composable(
                     route = "simulation/{lat}/{lng}",
                     arguments = listOf(

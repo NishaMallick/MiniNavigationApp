@@ -19,5 +19,6 @@ class PlaceRepositoryImpl @Inject constructor(
     override fun getPlaceById(id: Int): Place? {
         return localDataSource
             .loadPlaces()
-            .find { it.id == id }?.toDomain() }
+            .find { it.id == id }?.toDomain()
+    }
 }

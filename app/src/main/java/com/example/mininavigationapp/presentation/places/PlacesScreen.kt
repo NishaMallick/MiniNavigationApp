@@ -1,8 +1,5 @@
 package com.example.mininavigationapp.presentation.places
 
-import android.annotation.SuppressLint
-import com.example.mininavigationapp.R
-
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -19,7 +16,10 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -31,14 +31,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.mininavigationapp.R
 
 
-@SuppressLint("LocalContextResourcesRead")
 @Composable
 fun PlacesScreen(
     viewModel: PlacesViewModel,
     navController: NavController
-                 ) {
+) {
     val state by viewModel.state.collectAsState()
     Scaffold(
         topBar = {
@@ -59,7 +59,8 @@ fun PlacesScreen(
                         }
 
                         Card(
-                            modifier = Modifier.padding(2.dp)
+                            modifier = Modifier
+                                .padding(2.dp)
                                 .fillMaxWidth()
                                 .clickable {
                                     navController.navigate("details/${it.id}")
@@ -75,7 +76,7 @@ fun PlacesScreen(
                                     Image(
                                         painter = painterResource(iconResId),
                                         contentScale = ContentScale.Fit,
-                                        contentDescription = "",
+                                        contentDescription = stringResource(R.string.accessibility_image),
                                         modifier = Modifier
                                             .padding(8.dp)
                                             .size(35.dp)
@@ -116,12 +117,12 @@ fun PlacesTopBar() {
             containerColor = Color(0xFF1565C0)
         ),
         title = {
-                Image(
-                    painter = painterResource(id = R.drawable.app_logo),
-                    contentDescription = "App Logo",
-                    modifier = Modifier
-                        .size(36.dp),
-                )
+            Image(
+                painter = painterResource(id = R.drawable.app_logo),
+                contentDescription = "App Logo",
+                modifier = Modifier
+                    .size(36.dp),
+            )
         }
     )
 }

@@ -22,7 +22,7 @@ class CalculateDistanceUseCase @Inject constructor() {
             longitude = toLong
         }
 
-        val distanceInKms: Double = (pointA.distanceTo(pointB).toDouble())/1000
+        val distanceInKms: Double = (pointA.distanceTo(pointB).toDouble()) / 1000
 
         return distanceInKms
     }

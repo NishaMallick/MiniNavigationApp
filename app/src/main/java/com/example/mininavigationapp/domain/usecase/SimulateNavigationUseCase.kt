@@ -8,7 +8,8 @@ import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class SimulateNavigationUseCase @Inject constructor(
-    private val calculateDistanceUseCase: CalculateDistanceUseCase) {
+    private val calculateDistanceUseCase: CalculateDistanceUseCase
+) {
 
     private val speedKmPerHour = 40.0
     private val arrivalThresholdKm = 0.02
