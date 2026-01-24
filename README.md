@@ -45,9 +45,9 @@ This structure keeps UI, logic, and data responsibilities clearly separated.
 4. Run the app on an emulator or connected device
 
 ## Screenshots
-| Place List                                      | Place Details                                            | Navigation UI                                                                                         |
-|-------------------------------------------------|----------------------------------------------------------|-------------------------------------------------------------------------------------------------------|
-| ![](screenshots/screenshot_navigation_home.jpg) | ![](screenshots/screenshot_navigation_place_details.jpg) | ![](screenshots/screenshot_navigation_start.jpg)![](screenshots/screenshot_navigation_simulation.jpg) |
+| Place List                                      | Place Details                                            | Navigation UI                                         |
+|-------------------------------------------------|----------------------------------------------------------|-------------------------------------------------------|
+| ![](screenshots/screenshot_navigation_home.jpg) | ![](screenshots/screenshot_navigation_place_details.jpg) | ![](screenshots/screenshot_navigation_simulation.jpg) |
 
 ## Assumptions
 * No real GPS, maps, or navigation SDKs are used
